@@ -17,3 +17,77 @@
     <div class="right-button"> > </div>
   </div>
 */
+const carousel = Carousel();
+document.querySelector("div.carousel-container").appendChild(carousel);
+cycleCarouselImages(carousel);
+
+function cycleCarouselImages(carousel) {
+  const imagesNodeList = carousel.querySelectorAll("img")
+  const imagesArray = Array.from(imagesNodeList);
+  const leftButton = carousel.querySelector("div.left-button");
+  const rightButton = carousel.querySelector("div.right-button");
+
+  cycleImages(0);
+
+  function cycleImages(index) {
+    const maxIndex = imagesArray.length - 1;
+
+    if (index > maxIndex) {
+      return cycleImages(0);
+    } else if (index < 0) {
+      return cycleImages(maxIndex);
+    }
+
+    // hides the image at the current index and then recursively calls the parent function
+    // passing in the current index plus the direction (positive or negative one) as the index.
+    const nextImage = (currentIndex, direction = 1) => {
+      const nextIndex = currentIndex + direction;
+
+      imagesArray[currentIndex].style.display = "none";
+      return cycleImages(nextIndex);
+    }
+
+    leftButton.onclick = () => nextImage(index, -1);
+    rightButton.onclick = () => nextImage(index, 1);
+
+    gsap.from(imagesArray[index], { opacity: 0, duration: 0.5 });
+
+    return imagesArray[index].style.display = "block";
+  }
+}
+
+function Carousel() {
+  const imageSources = [
+    "./assets/carousel/mountains.jpeg",
+    "./assets/carousel/computer.jpeg",
+    "./assets/carousel/trees.jpeg",
+    "./assets/carousel/turntable.jpeg"
+  ];
+
+  // Create elements
+  const carouselEl = document.createElement("div");
+  const leftButtonEl = document.createElement("div");
+  const rightButtonEl = document.createElement("div");
+  const imageEls = [];
+
+  imageSources.forEach(imageSource => {
+    const image = document.createElement("img");
+    image.src = imageSource; // Set source attribute for image elements
+
+    imageEls.push(image);
+  });
+
+  // Add classes
+  carouselEl.classList.add("carousel");
+  leftButtonEl.classList.add("left-button");
+  rightButtonEl.classList.add("right-button");
+
+  // Append elements
+  carouselEl.appendChild(leftButtonEl);
+  imageEls.forEach(imageEl => {
+    carouselEl.appendChild(imageEl);
+  });
+  carouselEl.appendChild(rightButtonEl);
+
+  return carouselEl;
+}
