@@ -19,8 +19,26 @@
 //
 // Use your function to create a card for each of the articles and add the card to the DOM.
 
-function ArticleCard({ headlineText, authorImageSource, authorNameText }) {
-  // create elements
+axios.get("https://lambda-times-backend.herokuapp.com/articles")
+  .then(res => res.data)
+  .then(data => Object.values(data.articles))
+  .then(articleDataArrays => {
+    const cardsContainer = document.querySelector("div.cards-container");
+
+    // Loop through the arrays of article data
+    articleDataArrays.forEach(articleDataArray => {
+
+      // At the current iteration of the parent loop, loop through 
+      // This array of article data
+      rticleDataArray.forEach(articleData => { // Create a card using the article data and append it to the page
+        const card = ArticleCard(articleData);
+        cardsContainer.appendChild(card);
+      });
+    });
+  });
+
+function ArticleCard({ headline, authorPhoto, authorName }) {
+  // Create elements
   const cardEl = document.createElement("div");
   const headlineEl = document.createElement("div");
   const authorEl = document.createElement("div");
@@ -28,20 +46,20 @@ function ArticleCard({ headlineText, authorImageSource, authorNameText }) {
   const authorImageEl = document.createElement("img");
   const authorNameEl = document.createElement("span");
   
-  // add classes
+  // Add classes
   cardEl.classList.add("card");
   headlineEl.classList.add("headline");
   authorEl.classList.add("author");
   imageContainerEl.classList.add("img-container");
 
-  // set attributes
-  authorImageEl.src = authorImageSource;
+  // Set attributes
+  authorImageEl.src = authorPhoto;
 
   // Set text content
-  headlineEl.textContent = headlineText;
-  authorNameEl.textContent = authorNameText;
+  headlineEl.textContent = headline;
+  authorNameEl.textContent = authorName;
 
-  // append elements
+  // Append elements
   cardEl.appendChild(headlineEl);
   cardEl.appendChild(authorEl);
   authorEl.appendChild(imageContainerEl);
