@@ -30,7 +30,7 @@ axios.get("https://lambda-times-backend.herokuapp.com/articles")
 
       // At the current iteration of the parent loop, loop through 
       // This array of article data
-      rticleDataArray.forEach(articleData => { // Create a card using the article data and append it to the page
+      articleDataArray.forEach(articleData => { // Create a card using the article data and append it to the page
         const card = ArticleCard(articleData);
         cardsContainer.appendChild(card);
       });
