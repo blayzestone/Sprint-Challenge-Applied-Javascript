@@ -41,12 +41,16 @@ function cycleCarouselImages(carousel) {
     // hides the image at the current index and then recursively calls the parent function
     // passing in the current index plus the direction (positive or negative one) as the index.
     const nextImage = (currentIndex, direction = 1) => {
+      const nextIndex = currentIndex + direction;
+
       imagesArray[currentIndex].style.display = "none";
-      return cycleImages(currentIndex + direction);
+      return cycleImages(nextIndex);
     }
 
-    leftButton.addEventListener('click', () => nextImage(index, -1));
-    rightButton.addEventListener('click', () => nextImage(index, 1));
+    leftButton.onclick = () => nextImage(index, -1);
+    rightButton.onclick = () => nextImage(index, 1);
+
+    gsap.from(imagesArray[index], { opacity: 0, duration: 0.5 });
 
     return imagesArray[index].style.display = "block";
   }
