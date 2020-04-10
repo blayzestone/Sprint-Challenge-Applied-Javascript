@@ -18,3 +18,35 @@
 // </div>
 //
 // Use your function to create a card for each of the articles and add the card to the DOM.
+
+function ArticleCard({ headlineText, authorImageSource, authorNameText }) {
+  // create elements
+  const cardEl = document.createElement("div");
+  const headlineEl = document.createElement("div");
+  const authorEl = document.createElement("div");
+  const imageContainerEl = document.createElement("div");
+  const authorImageEl = document.createElement("img");
+  const authorNameEl = document.createElement("span");
+  
+  // add classes
+  cardEl.classList.add("card");
+  headlineEl.classList.add("headline");
+  authorEl.classList.add("author");
+  imageContainerEl.classList.add("img-container");
+
+  // set attributes
+  authorImageEl.src = authorImageSource;
+
+  // Set text content
+  headlineEl.textContent = headlineText;
+  authorNameEl.textContent = authorNameText;
+
+  // append elements
+  cardEl.appendChild(headlineEl);
+  cardEl.appendChild(authorEl);
+  authorEl.appendChild(imageContainerEl);
+  authorEl.appendChild(authorNameEl);
+  imageContainerEl.appendChild(authorImageEl);
+
+  return cardEl;
+}
