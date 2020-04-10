@@ -17,8 +17,40 @@
     <div class="right-button"> > </div>
   </div>
 */
+const carousel = Carousel();
+document.querySelector("div.carousel-container").appendChild(carousel);
+cycleCarouselImages(carousel);
 
-document.querySelector("div.carousel-container").appendChild(Carousel());
+function cycleCarouselImages(carousel) {
+  const imagesNodeList = carousel.querySelectorAll("img")
+  const imagesArray = Array.from(imagesNodeList);
+  const leftButton = carousel.querySelector("div.left-button");
+  const rightButton = carousel.querySelector("div.right-button");
+
+  cycleImages(0);
+
+  function cycleImages(index) {
+    const maxIndex = imagesArray.length - 1;
+
+    if (index > maxIndex) {
+      return cycleImages(0);
+    } else if (index < 0) {
+      return cycleImages(maxIndex);
+    }
+
+    // hides the image at the current index and then recursively calls the parent function
+    // passing in the current index plus the direction (positive or negative one) as the index.
+    const nextImage = (currentIndex, direction = 1) => {
+      imagesArray[currentIndex].style.display = "none";
+      return cycleImages(currentIndex + direction);
+    }
+
+    leftButton.addEventListener('click', () => nextImage(index, -1));
+    rightButton.addEventListener('click', () => nextImage(index, 1));
+
+    return imagesArray[index].style.display = "block";
+  }
+}
 
 function Carousel() {
   const imageSources = [
